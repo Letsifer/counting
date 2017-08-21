@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<domain project-version="6">
+	<map name="datamap"/>
+
+	<node name="countingDatanode"
+		 factory="org.apache.cayenne.configuration.server.XMLPoolingDataSourceFactory"
+		 schema-update-strategy="org.apache.cayenne.access.dbsync.SkipSchemaUpdateStrategy"
+		>
+		<map-ref name="datamap"/>
+		<data-source>
+			<driver value="org.postgresql.Driver"/>
+			<url value="jdbc:postgresql://localhost:5432/counting"/>
+			<connectionPool min="1" max="5"/>
+			<login userName="gea" password="gav7iop89lr!"/>
+		</data-source>
+	</node>
+</domain>
