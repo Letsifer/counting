@@ -22,8 +22,9 @@ import static ru.lets.counting.domain.tables.Categories.*;
  */
 public class CategoryDao {
 
-    private final String username = "gea";
-    private final String password = "gav7iop89lr!";
+    //TODO change and move to base dao
+    private final String username = "add_user";
+    private final String password = "add_pass";
     private final String databaseUrl = "jdbc:postgresql://localhost:5432/counting";
 
     private final DSLContext context;
