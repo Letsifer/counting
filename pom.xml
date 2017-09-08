@@ -61,6 +61,10 @@
                     <locations>
                         <location>filesystem:${basedir}/src/main/resources/db/migrations</location>
                     </locations>
+                    <schemas>
+                        <schema>public</schema>
+                        <schema>counting</schema>
+                    </schemas>
                 </configuration>
             </plugin>
             <plugin>
@@ -101,10 +105,14 @@
                             <name>org.jooq.util.postgres.PostgresDatabase</name>
                             <includes>.*</includes>
                             <excludes></excludes>
-                            <!-- In case your database supports catalogs, e.g. SQL Server:
-                          <inputCatalog>public</inputCatalog>
-                            -->
                             <inputSchema>counting</inputSchema>
+                            <forcedTypes>
+                                <forcedType>
+                                    <userType>java.time.LocalDate</userType>
+                                    <converter>ru.lets.counting.dao.converter.LocalDateConverter</converter>
+                                    <types>DATE</types>
+                                </forcedType>
+                            </forcedTypes>
                         </database>
                         <target>
                             <packageName>ru.lets.counting.domain</packageName>

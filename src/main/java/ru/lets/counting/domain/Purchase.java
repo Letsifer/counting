@@ -1,5 +1,7 @@
 package ru.lets.counting.domain;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Евгений
@@ -14,7 +16,15 @@ public class Purchase {
     
     private Category category;
     
-    //TODO add local_date
+    private LocalDate buyDate;
+
+    public LocalDate getBuyDate() {
+        return buyDate;
+    }
+
+    public void setBuyDate(LocalDate buyDate) {
+        this.buyDate = buyDate;
+    }
 
     public Integer getId() {
         return id;

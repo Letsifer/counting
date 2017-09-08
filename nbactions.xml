@@ -34,5 +34,17 @@
                 <flyway.user>gea</flyway.user>
                 <flyway.password>gav7iop89lr!</flyway.password>
             </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-clean</actionName>
+            <displayName>clean</displayName>
+            <goals>
+                <goal>flyway:clean</goal>
+            </goals>
+            <properties>
+                <flyway.url>jdbc:postgresql://localhost:5432/counting</flyway.url>
+                <flyway.user>gea</flyway.user>
+                <flyway.password>gav7iop89lr!</flyway.password>
+            </properties>
         </action>        
     </actions>

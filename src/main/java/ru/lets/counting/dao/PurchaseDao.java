@@ -3,6 +3,7 @@ package ru.lets.counting.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.jooq.Condition;
@@ -45,7 +46,9 @@ public class PurchaseDao {
             PURCHASES.ID,
             PURCHASES.AMOUNT,
             PURCHASES.DESCRIPTION,
-            PURCHASES.CATEGORY_ID
+            PURCHASES.PURCHASE_DATE,
+            PURCHASES.CATEGORY_ID,            
+            CATEGORIES.TITLE
         };
 
         @Override
@@ -67,6 +70,7 @@ public class PurchaseDao {
         return context
                 .select(PurchaseMapper.FIELDS)
                 .from(PURCHASES)
+                .join(CATEGORIES).on(PURCHASES.CATEGORY_ID.eq(CATEGORIES.ID))
                 .where(PURCHASES.ID.eq(id))
                 .fetchOne(PurchaseMapper.INSTANCE);
     }
@@ -83,20 +87,28 @@ public class PurchaseDao {
             if (filter.getMaxAmount() != null) {
                 conditions.add(PURCHASES.AMOUNT.le(filter.getMaxAmount()));
             }
+            if (filter.getMinBuyDate() != null) {
+                conditions.add(PURCHASES.PURCHASE_DATE.ge(filter.getMinBuyDate()));
+            }
+            if (filter.getMaxBuyDate() != null) {
+                conditions.add(PURCHASES.PURCHASE_DATE.le(filter.getMaxBuyDate()));
+            }
         }
         return context
                 .select(PurchaseMapper.FIELDS)
                 .from(PURCHASES)
+                .join(CATEGORIES).on(PURCHASES.CATEGORY_ID.eq(CATEGORIES.ID))
                 .where(conditions.stream().toArray(Condition[]::new))
                 .fetch(PurchaseMapper.INSTANCE);
     }
 
-    public Purchase save(Integer id, Integer amount, String description, Category category) {
+    public Purchase save(Integer id, Integer amount, String description, LocalDate buyDate, Category category) {
         if (id == null) {
             return context.insertInto(PURCHASES)
                     .set(PURCHASES.AMOUNT, amount)
                     .set(PURCHASES.DESCRIPTION, description)
                     .set(PURCHASES.CATEGORY_ID, category.getId())
+                    .set(PURCHASES.PURCHASE_DATE, buyDate)
                     .returning(PURCHASES.ID)
                     .fetchOne()
                     .map(PurchaseMapper.INSTANCE);
@@ -105,6 +117,7 @@ public class PurchaseDao {
                 .set(PURCHASES.AMOUNT, amount)
                 .set(PURCHASES.DESCRIPTION, description)
                 .set(PURCHASES.CATEGORY_ID, category.getId())
+                .set(PURCHASES.PURCHASE_DATE, buyDate)
                 .where(PURCHASES.ID.eq(id))
                 .returning(PURCHASES.ID)
                 .fetchOne()

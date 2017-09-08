@@ -1,5 +1,7 @@
 package ru.lets.counting.domain;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author Евгений
@@ -11,6 +13,26 @@ public class PurchaseFilter {
     private Integer maxAmount;
 
     private Integer categoryId;
+
+    private LocalDate minBuyDate;
+
+    private LocalDate maxBuyDate;
+
+    public LocalDate getMinBuyDate() {
+        return minBuyDate;
+    }
+
+    public void setMinBuyDate(LocalDate minBuyDate) {
+        this.minBuyDate = minBuyDate;
+    }
+
+    public LocalDate getMaxBuyDate() {
+        return maxBuyDate;
+    }
+
+    public void setMaxBuyDate(LocalDate maxBuyDate) {
+        this.maxBuyDate = maxBuyDate;
+    }
 
     public PurchaseFilter(Integer categoryId) {
         this.categoryId = categoryId;
